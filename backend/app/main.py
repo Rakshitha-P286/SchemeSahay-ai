@@ -40,7 +40,7 @@ app.add_middleware(
 
     allow_origins=[
         "http://localhost:5173",
-        "https://scheme-sahay-ai.vercel.app",
+        "https://scheme-sahay-8xeoliizb-rakshitha-p286s-projects.vercel.app/",
     ],
 
     allow_credentials=True,
