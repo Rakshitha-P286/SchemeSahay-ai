@@ -12,4 +12,4 @@ email-validator==2.2.0
 pytesseract==0.3.13
 Pillow==11.1.0
 requests==2.32.3
-openai==26.2.1
+openai==3.19.2
