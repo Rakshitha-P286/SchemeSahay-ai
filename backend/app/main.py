@@ -8,6 +8,11 @@ from chatbot import router as chatbot_router
 app = FastAPI(title="SchemeSahay API", version="1.0.0")
 app.include_router(chatbot_router, prefix="/api")
 app.add_middleware(
+        CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "https://scheme-sahay-ai.vercel.app/",
+    ],
     CORSMiddleware,
     allow_origins=settings.cors_list,
     allow_credentials=True,
