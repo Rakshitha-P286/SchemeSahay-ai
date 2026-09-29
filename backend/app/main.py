@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.config.settings import settings
+
 from app.routes import (
     auth,
     profile,
@@ -21,9 +22,9 @@ from app.routes import (
 from chatbot import router as chatbot_router
 
 
-# ---------------------------------------------------------
-# FastAPI App
-# ---------------------------------------------------------
+# =========================================================
+# APP
+# =========================================================
 
 app = FastAPI(
     title="SchemeSahay API",
@@ -31,27 +32,43 @@ app = FastAPI(
 )
 
 
-# ---------------------------------------------------------
+# =========================================================
 # CORS
-# ---------------------------------------------------------
+# =========================================================
+#
+# Allows:
+# 1. Local development
+# 2. Your current Vercel deployment
+# 3. Future Vercel preview deployments
+#
+# =========================================================
 
 app.add_middleware(
     CORSMiddleware,
 
     allow_origins=[
         "http://localhost:5173",
-        "https://scheme-sahay-q2sqwrutn-rakshitha-p286s-projects.vercel.app/",
+        "http://127.0.0.1:5173",
+
+        "https://scheme-sahay-ai.vercel.app",
+
+        "https://scheme-sahay-q2sqwrutn-rakshitha-p286s-projects.vercel.app",
     ],
 
+    # Allow future Vercel preview URLs automatically
+    allow_origin_regex=r"https://.*\.vercel\.app",
+
     allow_credentials=True,
+
     allow_methods=["*"],
+
     allow_headers=["*"],
 )
 
 
-# ---------------------------------------------------------
-# Upload Directory
-# ---------------------------------------------------------
+# =========================================================
+# UPLOADS
+# =========================================================
 
 Path(settings.upload_dir).mkdir(
     parents=True,
@@ -65,9 +82,9 @@ app.mount(
 )
 
 
-# ---------------------------------------------------------
-# API Routes
-# ---------------------------------------------------------
+# =========================================================
+# API ROUTES
+# =========================================================
 
 app.include_router(
     auth.router,
@@ -120,9 +137,9 @@ app.include_router(
 )
 
 
-# ---------------------------------------------------------
-# Chatbot
-# ---------------------------------------------------------
+# =========================================================
+# CHATBOT
+# =========================================================
 
 app.include_router(
     chatbot_router,
@@ -130,9 +147,9 @@ app.include_router(
 )
 
 
-# ---------------------------------------------------------
-# Root Endpoint
-# ---------------------------------------------------------
+# =========================================================
+# ROOT
+# =========================================================
 
 @app.get("/")
 def root():
@@ -143,9 +160,9 @@ def root():
     }
 
 
-# ---------------------------------------------------------
-# Health Check
-# ---------------------------------------------------------
+# =========================================================
+# HEALTH CHECK
+# =========================================================
 
 @app.get("/health")
 def health():
